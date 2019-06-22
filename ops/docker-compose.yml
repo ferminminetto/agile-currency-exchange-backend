@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  main_app:
+    image: python:latest
+    command: sh /app/ops/main_app/app_start.sh
+    env_file:
+      env
+    volumes:
+      - ..:/app
+    ports:
+      - 8005:8000
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    env_file:
+      env

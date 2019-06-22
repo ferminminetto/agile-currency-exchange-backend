@@ -1,0 +1,13 @@
+ENVIRONMENT=dev
+
+DJANGO_APP_KEY=asfa9u210124aw15125saxv
+DJANGO_DB_NAME=agile_currency_exchange
+DJANGO_DB_USER=agile_currency_exchange
+DJANGO_DB_HOST=db
+DJANGO_DB_PORT=5432
+DJANGO_DB_PASSWORD=verysecret
+DJANGO_DEBUG=True
+
+POSTGRES_USER=agile_currency_exchange
+POSTGRES_DB=agile_currency_exchange
+POSTGRES_PASSWORD=verysecret
