@@ -1,0 +1,12 @@
+*.py[co]
+__pycache__
+.idea
+bin/
+include/
+lib/
+pip-selfcheck.json
+.coverage
+**/migrations/0*.py
+*.sqlite3
+media/
+ops/env
