@@ -8,4 +8,4 @@ class BaseModelTests(TestCase):
         new_model = BaseModel()
         self.assertIs(new_model.deleted, False)
         new_model.delete()
-        self.assertIs(new_model.pldeleted, True)
+        self.assertIs(new_model.deleted, True)
