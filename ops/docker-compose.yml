@@ -12,8 +12,13 @@ services:
       - 8005:8000
     depends_on:
       - db
+      - redis
 
   db:
     image: postgres:latest
     env_file:
       env
+
+  redis:
+    restart: always
+    image: redis:4.0-alpine
