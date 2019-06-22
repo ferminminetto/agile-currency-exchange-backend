@@ -8,6 +8,9 @@ class BaseManager(models.Manager):
 
 
 class BaseModel(models.Model):
+    """
+    Core Base Model that adds soft deleting logic and log attributes.
+    """
 
     class Meta:
         abstract = True
@@ -21,3 +24,4 @@ class BaseModel(models.Model):
 
     def delete(self):
         self.deleted = True
+        self.save()
