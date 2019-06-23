@@ -5,6 +5,11 @@ cd /app
 CREATED_FLAG=/created
 if [ ! -f "$CREATED_FLAG" ]; then
     pip install -r requirements.txt
+
+    # Delete previous migrations to get a fresh start
+    find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+    find . -path "*/migrations/*.pyc" -delete
+
     python manage.py makemigrations
     python manage.py migrate
     python manage.py test

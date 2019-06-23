@@ -15,13 +15,9 @@ def currencies_seeder(path_to_open):
         currency_data = currencies_data[currency_data_index]
         is_master = False if currency_data['code'] != 'USD' else True
         Currency.objects.create(
-            symbol=currency_data['symbol'],
-            code=currency_data['code'],
-            name=currency_data['name'],
-            name_plural=currency_data['name_plural'],
-            decimal_digits=currency_data['decimal_digits'],
-            is_master=is_master,
-            active=is_master
+            symbol=currency_data['symbol'], code=currency_data['code'], name=currency_data['name'],
+            name_plural=currency_data['name_plural'], decimal_digits=currency_data['decimal_digits'],
+            is_master=is_master, active=is_master
         )
 
 
