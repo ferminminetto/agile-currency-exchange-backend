@@ -10,6 +10,7 @@ services:
       - ..:/app
     ports:
       - 8005:8000
+      - 8004:8004 # Only for debugging.
     depends_on:
       - db
       - redis

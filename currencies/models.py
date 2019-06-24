@@ -21,6 +21,15 @@ class Currency(BaseModel):
     def __str__(self):
         return '%s - %s' % (self.code, self.name)
 
+    def as_json(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'name_plural': self.name_plural,
+            'code': self.code,
+            'symbol': self.symbol
+        }
+
     def value_equivalence_to_other_currency(self, other_currency_value, other_currency_exchange_rate):
         """
         Used if I want to convert a value from another currency to my currency value
