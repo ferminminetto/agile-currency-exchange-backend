@@ -1,10 +1,11 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
+from django.urls import reverse
 from currencies.models import Currency
 from accounts.models import Account, AccountLog
 from django.contrib.auth.models import User
 
 
-class AccountAndAccountLogBaseTestCase(TestCase):
+class AccountAndAccountLogBaseTestCase(APITestCase):
 
     argentine_peso = Currency(
         symbol='AR$', code='ARS', name='Argentine Peso',
@@ -18,6 +19,10 @@ class AccountAndAccountLogBaseTestCase(TestCase):
     )
     pesos_test_account = None
     dollars_test_account = None
+
+    def get_token(self):
+        url = reverse('token_obtain_pair')
+        return self.client.post(url, {'username': 'test111', 'password': 'testtttt1232'}, format='json').data['access']
 
     def setUp(self):
         User.objects.create_user('test111', 'testtt@testttt.com', 'testtttt1232').save()
