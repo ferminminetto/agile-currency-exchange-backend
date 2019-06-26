@@ -41,16 +41,16 @@ class UserSerializer(serializers.ModelSerializer):
         except:
             raise serializers.ValidationError('Please enter a valid email')
 
-    def length_validator(self, value):
+    def length_validator(self, value, name):
         if value:
             if len(value) < 5:
-                raise serializers.ValidationError('Please enter a longer password')
+                raise serializers.ValidationError('Please enter a longer %s' % (name))
             else:
                 return value
 
     def validate_username(self, username):
-        return self.length_validator(username)
+        return self.length_validator(username, 'username')
 
     def validate_password(self, password):
-        return self.length_validator(password)
+        return self.length_validator(password, 'password')
 

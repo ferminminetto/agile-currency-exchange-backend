@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 from .models import Account
 from .serializers import AccountSerializer, UserSerializer
+from currencies.models import Currency
 
 
 class AccountGetData(views.APIView):
@@ -80,7 +81,18 @@ class RegisterUser(views.APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
+        if not request.data['currency_id']:
+            raise ValidationError({'currency': 'You need to select a currency to associate to your account'})
+
         user_serializer = UserSerializer(data=request.data)
         user_serializer.is_valid(raise_exception=True)
-        user_serializer.create(user_serializer.data)
+        user_created = user_serializer.create(user_serializer.data)
+        user_created.is_active = True
+        user_created.set_password(user_serializer.data['password'])
+        user_created.save()
+
+        currency = Currency.objects.get(id=int(request.data['currency_id']))
+        account = Account.objects.create(
+            balance=0.0, owner=user_created, currency=currency
+        )
         return Response(status=status.HTTP_201_CREATED)

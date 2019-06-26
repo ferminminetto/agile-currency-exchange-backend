@@ -83,7 +83,8 @@ class UserViewsTests(AccountAndAccountLogBaseTestCase, APITestCase):
             'first_name': 'fermin',
             'last_name': 'minetto',
             'password': 12345215251,
-            'email': 'ferminmine'
+            'email': 'ferminmine',
+            'currency_id': self.argentine_peso.id
         }
         response = self.client.post(reverse('register_user'), user_example)
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -93,7 +94,8 @@ class UserViewsTests(AccountAndAccountLogBaseTestCase, APITestCase):
             'first_name': 'fermin',
             'last_name': 'minetto',
             'password': 12345215251,
-            'email': 'ferminmine@gmail.com'
+            'email': 'ferminmine@gmail.com',
+            'currency_id': self.argentine_peso.id
         }
         response = self.client.post(reverse('register_user'), user_example)
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)

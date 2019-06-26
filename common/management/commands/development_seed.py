@@ -25,12 +25,23 @@ def currencies_seeder(path_to_open):
         currency_data = currencies_data[currency_data_index]
         code = currency_data['code']
         is_master = False if code != 'USD' else True
-        active = True if code == 'USD' or code == 'ARS' or code == 'JPY' else True
+        active = True if code == 'USD' or code == 'ARS' or code == 'JPY' else False
         Currency.objects.create(
             symbol=currency_data['symbol'], code=currency_data['code'], name=currency_data['name'],
             name_plural=currency_data['name_plural'], decimal_digits=currency_data['decimal_digits'],
             is_master=is_master, active=active
         )
+    usd = Currency.objects.get(code='USD')
+    usd.exchange_rate = 1
+    usd.save()
+
+    ars = Currency.objects.get(code='ARS')
+    ars.exchange_rate = 0.023
+    ars.save()
+
+    jpy = Currency.objects.get(code='USD')
+    jpy.exchange_rate = 0.0093
+    jpy.save()
 
 
 class Command(BaseCommand):
