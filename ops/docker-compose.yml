@@ -1,11 +1,10 @@
 version: '2'
 
 services:
-  main_app:
+  backend:
     image: python:latest
-    command: sh /app/ops/main_app/app_start.sh
-    env_file:
-      env
+    command: sh /app/ops/backend_start.sh
+    env_file: ./env
     volumes:
       - ..:/app
     ports:
@@ -15,10 +14,19 @@ services:
       - db
       - redis
 
+  frontend:
+    image: node:latest
+    command: sh /app/frontend_start.sh
+    volumes:
+      - ../../agile-currency-exchange-frontend:/app
+    ports:
+      - 3001:3000
+    depends_on:
+      - backend
+
   db:
     image: postgres:latest
-    env_file:
-      env
+    env_file: ./env
 
   redis:
     restart: always
