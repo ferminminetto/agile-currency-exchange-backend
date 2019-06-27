@@ -58,20 +58,20 @@ class OperateAccountWithMoney(views.APIView):
 class AccountAddMoney(OperateAccountWithMoney):
 
     def operation_with_money(self, request, account):
-        account.add_money(float(request.POST.get('value_to_add')))
+        account.add_money(float(request.data.get('value_to_add')))
 
 
 class AccountWithdrawMoney(OperateAccountWithMoney):
 
     def operation_with_money(self, request, account):
-        account.withdraw_money(float(request.POST.get('value_to_withdraw')))
+        account.withdraw_money(float(request.data.get('value_to_withdraw')))
 
 
 class AccountTransferMoney(OperateAccountWithMoney):
 
     def operation_with_money(self, request, account):
-        value_to_transfer = float(request.POST.get('value_to_transfer'))
-        account_to_transfer_id = int(request.POST.get('account_to_transfer_id'))
+        value_to_transfer = float(request.data.get('value_to_transfer'))
+        account_to_transfer_id = int(request.data.get('account_to_transfer_id'))
         account_to_transfer = Account.objects.select_for_update().get(id=account_to_transfer_id)
         account.transfer_money(value_to_transfer, account_to_transfer)
 
