@@ -11,12 +11,16 @@ def test_user_seed():
     User.objects.create_user('antonio', 'antonio@test.com', 'antonio')
     User.objects.create_user('fermin', 'fermin@test.com', 'fermin')
 
-    Account.objects.create(
+    account1 = Account.objects.create(
         balance=60000.0, owner=User.objects.get(username='antonio'), currency=Currency.objects.get(code='JPY')
     )
-    Account.objects.create(
+    account1.add_money(70000.0)
+    account2 = Account.objects.create(
         balance=30000.0, owner=User.objects.get(username='fermin'), currency=Currency.objects.get(code='ARS')
     )
+    account2.add_money(5000.0)
+    account2.transfer_money(3000, account1)
+    account1.transfer_money(1000, account2)
 
 
 def currencies_seeder(path_to_open):
@@ -39,7 +43,7 @@ def currencies_seeder(path_to_open):
     ars.exchange_rate = 0.023
     ars.save()
 
-    jpy = Currency.objects.get(code='USD')
+    jpy = Currency.objects.get(code='JPY')
     jpy.exchange_rate = 0.0093
     jpy.save()
 
