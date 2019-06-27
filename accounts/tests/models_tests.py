@@ -26,13 +26,14 @@ class AccountAndAccountLogBaseTestCase(APITestCase):
 
     def setUp(self):
         User.objects.create_user('test111', 'testtt@testttt.com', 'testtttt1232').save()
+        User.objects.create_user('test222', 'testtt@ttestttt.com', 'testtttt1232').save()
         self.argentine_peso.save()
         self.dollar.save()
         self.pesos_test_account = Account.objects.create(
             balance=100.0, owner=User.objects.get(username='test111'), currency=self.argentine_peso
         )
         self.dollars_test_account = Account.objects.create(
-            balance=100.0, owner=User.objects.get(username='test111'), currency=self.dollar
+            balance=100.0, owner=User.objects.get(username='test222'), currency=self.dollar
         )
         self.pesos_test_account.save()
         self.dollars_test_account.save()

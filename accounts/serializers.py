@@ -22,7 +22,7 @@ class AccountLogSerializer(serializers.HyperlinkedModelSerializer):
         model = AccountLog
         fields = (
             'id', 'value_modified_sender', 'value_modified_receiver',
-            'account_new_value', 'transaction_type'
+            'account_new_value', 'transaction_type', 'receiver_id'
         )
 
 

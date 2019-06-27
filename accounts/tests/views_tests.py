@@ -10,16 +10,16 @@ from django.contrib.auth.models import User
 class AccountViewsTests(AccountAndAccountLogBaseTestCase, APITestCase):
 
     def test_get_account_info(self):
-        account_id = Account.objects.first().id
+        account = Account.objects.first()
         response = self.client.get(reverse('account_get_data', kwargs={
-            'account_id': account_id,
+            'user_id': account.owner.id,
         }))
         self.assertEquals(response.status_code, status.HTTP_403_FORBIDDEN)
 
         token = 'Bearer ' + self.get_token()
         self.client.credentials(HTTP_AUTHORIZATION=token)
         response = self.client.get(reverse('account_get_data', kwargs={
-            'account_id': account_id,
+            'user_id': account.owner.id,
         }))
         self.assertEquals(response.data['balance'], 100.0)
 

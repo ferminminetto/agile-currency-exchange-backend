@@ -7,21 +7,34 @@ from django.db import transaction
 from django.contrib.auth.models import User
 
 from .models import Account
-from .serializers import AccountSerializer, UserSerializer
+from .serializers import AccountSerializer, UserSerializer, AccountLogSerializer
 from currencies.models import Currency
 
 
-class AccountGetData(views.APIView):
+class AccountGetDataTemplate(views.APIView):
 
     def get(self, request, *args, **kwargs):
         try:
-            account = Account.objects.get(id=kwargs.get('account_id'))
+            account = Account.objects.get(owner__id=kwargs.get('user_id'))
             if account.owner_id != request.user.id:
                 raise PermissionDenied
-            serializer = AccountSerializer(account, many=False)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(self.to_serialize(account), status=status.HTTP_200_OK)
         except PermissionDenied:
             return Response(status=status.HTTP_403_FORBIDDEN)
+
+
+class AccountGetData(AccountGetDataTemplate):
+
+        def to_serialize(self, account):
+            serializer = AccountSerializer(account, many=False)
+            return serializer.data
+
+
+class AccountLogsGetData(AccountGetDataTemplate):
+
+    def to_serialize(self, account):
+        serializer = AccountLogSerializer(account.logs, many=True)
+        return serializer.data
 
 
 class OperateAccountWithMoney(views.APIView):
