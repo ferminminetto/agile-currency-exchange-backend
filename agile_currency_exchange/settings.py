@@ -130,3 +130,12 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+"""
+    Override certain settings in case of executing the app locally
+        instead of running it with Docker
+"""
+try:
+    from agile_currency_exchange.local_settings import *
+except ImportError:
+    pass
