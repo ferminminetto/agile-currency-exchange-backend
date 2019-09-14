@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from .models_tests import AccountAndAccountLogBaseTestCase
+from .tests_models import AccountAndAccountLogBaseTestCase
 from accounts.models import Account
 from django.contrib.auth.models import User
 
