@@ -1,5 +1,8 @@
 from django.test import TestCase
 from currencies.models import Currency
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class CurrencyTests(TestCase):
@@ -23,6 +26,7 @@ class CurrencyTests(TestCase):
     def test_to_string(self):
         self.assertEquals(str(self.dollar), 'USD - US Dollar')
         self.assertNotEqual(str(self.japanese_yen), '¥ - Japanese Yen')
+        logger.info('Logging Info Example with name of the module')
 
     def test_value_equivalence_to_other_currency(self):
         to_round = self.japanese_yen.value_equivalence_to_other_currency(1, self.argentine_peso.exchange_rate)

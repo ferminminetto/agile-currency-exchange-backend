@@ -1,4 +1,5 @@
 from datetime import timedelta
+import logging.config
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -130,6 +131,32 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+
+DJANGO_LOG_LEVEL = os.environ.get('DJANGO_LOG_LEVEL', 'info').upper()
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'console': {
+            # exact format is not important, this is the minimum information
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+        '': {
+            'level': DJANGO_LOG_LEVEL,
+            'handlers': ['console', ],
+        },
+    },
+})
+
 
 """
     Override certain settings in case of executing the app locally
