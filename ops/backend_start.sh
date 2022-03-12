@@ -1,11 +1,9 @@
 #!/bin/bash
 
-cd /app
+cd /ace_api
 
 CREATED_FLAG=/created
 if [ ! -f "$CREATED_FLAG" ]; then
-    pip install -r requirements.txt
-
     # Delete previous migrations to get a fresh start
     find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
     find . -path "*/migrations/*.pyc" -delete
@@ -22,4 +20,8 @@ fi
 
 touch $CREATED_FLAG
 
-python manage.py runserver 0.0.0.0:8000
+if [ $MODE = "web" ]; then
+    python manage.py runserver 0.0.0.0:8000
+elif [ $MODE = "worker" ]; then
+    python manage.py task
+fi

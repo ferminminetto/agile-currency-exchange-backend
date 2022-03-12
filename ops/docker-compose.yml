@@ -2,11 +2,12 @@ version: '2'
 
 services:
   backend:
-    image: python:latest
-    command: sh /app/ops/backend_start.sh
+    build: ..
     env_file: ./env
+    environment:
+      - MODE=web
     volumes:
-      - ..:/app
+      - ..:/ace_api
     ports:
       - 8005:8000
       - 8004:8004 # Only for debugging.
