@@ -1,4 +1,4 @@
-Django==4
+Django==4.1.7
 django-cors-headers
 django-extensions
 django-pdb
